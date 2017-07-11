@@ -126,10 +126,15 @@ comp_kwic <- kwic %>% group_by(graphtoken_lemma) %>% summarise(
   Pred_upper = sum(predicted),
   # Pred_upper=unique(predicted),
   Freq=n(),
-  Diff = Observed_upper - Pred_upper
+  Diff = Observed_upper - Pred_upper,
+  Diff2 = (Observed_upper - Pred_upper) / n()
 )
 
+
 # highest deviations between predicted and observed forms
-head(comp_kwic[order(comp_kwic$Diff),], 10)
-tail(comp_kwic[order(comp_kwic$Diff),], 10)
+head(comp_kwic[order(comp_kwic$Diff),], 20)
+tail(comp_kwic[order(comp_kwic$Diff),], 20)
+
+comp_kwic[order(comp_kwic$Diff2),] %>% filter(Freq>5) %>% head(20)
+comp_kwic[order(comp_kwic$Diff2),] %>% filter(Freq>5) %>%  tail(20)
 
